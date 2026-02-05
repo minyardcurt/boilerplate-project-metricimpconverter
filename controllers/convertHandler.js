@@ -1,12 +1,15 @@
 function ConvertHandler() {
 
 this.getNum = function (input) {
-  const result = input.match(/^[\d/.]+/);
+  // Extract everything up to the first letter
+  const result = input.match(/^[^a-zA-Z]+/);
 
+  // No number provided → default to 1
   if (!result) return 1;
 
   const num = result[0];
 
+  // Double fraction check
   if (num.split('/').length > 2) return 'invalid number';
 
   let value;
@@ -21,6 +24,7 @@ this.getNum = function (input) {
 
   return value;
 };
+
 
 
   this.getUnit = function (input) {
