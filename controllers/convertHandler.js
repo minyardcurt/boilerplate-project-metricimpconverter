@@ -1,28 +1,27 @@
 function ConvertHandler() {
 
-  this.getNum = function (input) {
-    const result = input.match(/^[^a-zA-Z]+/);
+this.getNum = function (input) {
+  const result = input.match(/^[\d/.]+/);
 
-    // default to 1 if no number
-    if (!result) return 1;
+  if (!result) return 1;
 
-    const num = result[0];
+  const num = result[0];
 
-    // double fraction check
-    if (num.split('/').length > 2) return 'invalid number';
+  if (num.split('/').length > 2) return 'invalid number';
 
-    let value;
-    if (num.includes('/')) {
-      const [numerator, denominator] = num.split('/');
-      if (isNaN(numerator) || isNaN(denominator)) return 'invalid number';
-      value = parseFloat(numerator) / parseFloat(denominator);
-    } else {
-      if (isNaN(num)) return 'invalid number';
-      value = parseFloat(num);
-    }
+  let value;
+  if (num.includes('/')) {
+    const [numerator, denominator] = num.split('/');
+    value = parseFloat(numerator) / parseFloat(denominator);
+  } else {
+    value = parseFloat(num);
+  }
 
-    return value;
-  };
+  if (isNaN(value)) return 'invalid number';
+
+  return value;
+};
+
 
   this.getUnit = function (input) {
     const result = input.match(/[a-zA-Z]+$/);
