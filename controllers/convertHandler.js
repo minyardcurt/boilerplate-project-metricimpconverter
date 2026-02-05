@@ -1,23 +1,24 @@
 function ConvertHandler() {
 
 this.getNum = function (input) {
+  if (!input) return 'invalid number';
+
   // Extract everything up to the first letter
-  const result = input.match(/^[^a-zA-Z]+/);
+  const index = input.search(/[a-zA-Z]/);
+  const numString = index === -1 ? input : input.slice(0, index);
 
-  // No number provided → default to 1
-  if (!result) return 1;
+  // Default to 1 if no number
+  if (numString === '') return 1;
 
-  const num = result[0];
-
-  // Double fraction check
-  if (num.split('/').length > 2) return 'invalid number';
+  // Reject double fractions
+  if (numString.split('/').length > 2) return 'invalid number';
 
   let value;
-  if (num.includes('/')) {
-    const [numerator, denominator] = num.split('/');
+  if (numString.includes('/')) {
+    const [numerator, denominator] = numString.split('/');
     value = parseFloat(numerator) / parseFloat(denominator);
   } else {
-    value = parseFloat(num);
+    value = parseFloat(numString);
   }
 
   if (isNaN(value)) return 'invalid number';
@@ -25,9 +26,7 @@ this.getNum = function (input) {
   return value;
 };
 
-
-
-  this.getUnit = function (input) {
+ this.getUnit = function (input) {
     const result = input.match(/[a-zA-Z]+$/);
     if (!result) return 'invalid unit';
 
